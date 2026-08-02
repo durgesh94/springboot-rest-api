@@ -3,6 +3,7 @@ package com.learning.springboot.user.controller;
 import com.learning.springboot.user.dto.UserRequestDto;
 import com.learning.springboot.user.dto.UserResponseDto;
 import com.learning.springboot.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequest) {
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto userRequest) {
         UserResponseDto userResponse = userService.createUser(userRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -40,7 +41,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(
             @PathVariable Long id,
-            @RequestBody UserRequestDto userRequest) {
+            @Valid @RequestBody UserRequestDto userRequest) {
 
         UserResponseDto userResponse = userService.updateUser(id, userRequest);
 

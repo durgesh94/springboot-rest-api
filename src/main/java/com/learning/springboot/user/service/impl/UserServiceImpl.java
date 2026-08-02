@@ -1,5 +1,6 @@
 package com.learning.springboot.user.service.impl;
 
+import com.learning.springboot.exception.DuplicateResourceException;
 import com.learning.springboot.exception.ResourceNotFoundException;
 import com.learning.springboot.user.dto.UserRequestDto;
 import com.learning.springboot.user.dto.UserResponseDto;
@@ -24,6 +25,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequest) {
+        // Optional<User> existingUser = userRepository.findByEmail(userRequest.getEmail());
+        boolean isEmailExist = userRepository.existsByEmail(userRequest.getEmail());
+        if (isEmailExist) {
+            throw new DuplicateResourceException("Email already exists : " + userRequest.getEmail());
+        }
         User user = UserMapper.toEntity(userRequest);
         User savedUser = userRepository.save(user);
         return UserMapper.toDto(savedUser);
