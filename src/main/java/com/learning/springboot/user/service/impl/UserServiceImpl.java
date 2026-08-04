@@ -53,12 +53,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto updateUser(Long id, UserRequestDto userRequest) {
-        User user = userRepository.findById(id)
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        UserMapper.updateEntity(user, userRequest);
+        // Check duplicate email only if the email is changed
+        if (!existingUser.getEmail().equals(userRequest.getEmail())) {
 
-        User updatedUser = userRepository.save(user);
+            boolean isPresent = userRepository.existsByEmail(userRequest.getEmail());
+            if (isPresent) {
+                throw new DuplicateResourceException("Email already exists : " + userRequest.getEmail());
+            }
+        }
+
+        UserMapper.updateEntity(existingUser, userRequest);
+
+        User updatedUser = userRepository.save(existingUser);
 
         return UserMapper.toDto(updatedUser);
     }
