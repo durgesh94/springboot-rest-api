@@ -8,6 +8,7 @@ import com.learning.springboot.user.entity.User;
 import com.learning.springboot.user.mapper.UserMapper;
 import com.learning.springboot.user.repository.UserRepository;
 import com.learning.springboot.user.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequest) {
-        // Optional<User> existingUser = userRepository.findByEmail(userRequest.getEmail());
         boolean isEmailExist = userRepository.existsByEmail(userRequest.getEmail());
         if (isEmailExist) {
             throw new DuplicateResourceException("Email already exists : " + userRequest.getEmail());
@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
+    @Transactional // @Transactional annotation is used to manage transactions in the updateUser method. It ensures that the entire method is executed within a single transaction, which means that if any part of the method fails (e.g., if an exception is thrown), all changes made during the method execution will be rolled back, maintaining data integrity.
     @Override
     public UserResponseDto updateUser(Long id, UserRequestDto userRequest) {
         User existingUser = userRepository.findById(id)
@@ -72,6 +73,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toDto(updatedUser);
     }
 
+    @Transactional // @Transactional annotation is used to manage transactions in the updateUser method. It ensures that the entire method is executed within a single transaction, which means that if any part of the method fails (e.g., if an exception is thrown), all changes made during the method execution will be rolled back, maintaining data integrity.
     @Override
     public void deleteUserById(Long id) {
         User user = userRepository.findById(id)
