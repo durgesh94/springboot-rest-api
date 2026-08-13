@@ -2,6 +2,8 @@ package com.learning.springboot.user.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +18,8 @@ public class UserResponseDto {
     private String lastName;
 
     private String email;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }
