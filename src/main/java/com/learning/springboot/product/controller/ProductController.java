@@ -20,8 +20,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> createProduct(
-            @Valid @RequestBody ProductRequestDto productRequest
-    ) {
+            @Valid @RequestBody ProductRequestDto productRequest) {
         ProductResponseDto productResponse = productService.createProduct(productRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
@@ -35,8 +34,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponseDto>> getAllProducts() {
 
-        List<ProductResponseDto> response =
-                productService.getAllProducts();
+        List<ProductResponseDto> response = productService.getAllProducts();
 
         return ResponseEntity.ok(response);
     }
@@ -46,8 +44,7 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ProductRequestDto productRequest) {
 
-        ProductResponseDto productResponse =
-                productService.updateProduct(id, productRequest);
+        ProductResponseDto productResponse = productService.updateProduct(id, productRequest);
 
         return ResponseEntity.ok(productResponse);
     }

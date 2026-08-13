@@ -28,5 +28,5 @@ public class ProductRequestDto {
     @NotNull(message = "Product quantity is required")
     @Min(value = 0, message = "Stock quantity cannot be negative")
     private Integer quantity;
-    
+
 }

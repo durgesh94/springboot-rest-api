@@ -33,8 +33,7 @@ public class ProductMapper {
 
     public static void updateEntity(
             Product product,
-            ProductRequestDto productRequest
-    ) {
+            ProductRequestDto productRequest) {
         product.setName(productRequest.getName());
         product.setDescription(productRequest.getDescription());
         product.setPrice(productRequest.getPrice());
