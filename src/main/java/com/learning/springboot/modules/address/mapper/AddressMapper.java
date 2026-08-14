@@ -34,7 +34,7 @@ public class AddressMapper {
                 .build();
     }
 
-    public static Void updateAddress(
+    public static void updateEntity(
             Address address,
             AddressRequestDto addressRequest,
             User user
@@ -45,6 +45,5 @@ public class AddressMapper {
         address.setCity(addressRequest.getCity());
         address.setState(addressRequest.getState());
         address.setPincode(address.getPincode());
-        return null;
     }
 }
