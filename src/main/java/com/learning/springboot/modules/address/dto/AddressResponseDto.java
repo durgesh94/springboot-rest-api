@@ -1,7 +1,14 @@
 package com.learning.springboot.modules.address.dto;
 
+import lombok.*;
+
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AddressResponseDto {
 
     private Long id;
