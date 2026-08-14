@@ -31,6 +31,8 @@ public class AddressMapper {
                 .city(address.getCity())
                 .state(address.getState())
                 .pincode(address.getPincode())
+                .createdAt(address.getCreatedAt())
+                .updatedAt(address.getUpdatedAt())
                 .build();
     }
 
