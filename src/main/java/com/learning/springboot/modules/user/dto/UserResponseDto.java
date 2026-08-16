@@ -1,7 +1,6 @@
 package com.learning.springboot.modules.user.dto;
 
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Getter

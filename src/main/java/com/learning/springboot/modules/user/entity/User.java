@@ -1,8 +1,12 @@
 package com.learning.springboot.modules.user.entity;
 
 import com.learning.springboot.common.BaseEntity;
+import com.learning.springboot.modules.address.entity.Address;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,4 +29,12 @@ public class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Builder.Default
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Address> addresses = new ArrayList<>();
 }
