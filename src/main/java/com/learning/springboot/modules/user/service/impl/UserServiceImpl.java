@@ -9,6 +9,7 @@ import com.learning.springboot.modules.user.mapper.UserMapper;
 import com.learning.springboot.modules.user.repository.UserRepository;
 import com.learning.springboot.modules.user.service.UserService;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,20 +19,29 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // constructor injection
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequest) {
+        // Step 1: Check existing email
         boolean isEmailExist = userRepository.existsByEmail(userRequest.getEmail());
         if (isEmailExist) {
             throw new DuplicateResourceException("Email already exists : " + userRequest.getEmail());
         }
+        // Step 2: Convert dto to entity
         User user = UserMapper.toEntity(userRequest);
+        // Step 3: Hash password
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        // Step 4: Save user
         User savedUser = userRepository.save(user);
+        // Step 5: Convert entity to dto
         return UserMapper.toDto(savedUser);
     }
 
