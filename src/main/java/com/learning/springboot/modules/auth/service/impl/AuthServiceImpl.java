@@ -3,6 +3,7 @@ package com.learning.springboot.modules.auth.service.impl;
 import com.learning.springboot.modules.auth.dto.LoginRequestDto;
 import com.learning.springboot.modules.auth.dto.LoginResponseDto;
 import com.learning.springboot.modules.auth.service.AuthService;
+import com.learning.springboot.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ public class AuthServiceImpl implements AuthService {
     // private final PasswordEncoder passwordEncoder;
     // Above both replace with authenticationManager
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequest) {
@@ -34,9 +36,13 @@ public class AuthServiceImpl implements AuthService {
                         loginRequest.getPassword()
                 )
         );
+        // New Step: Generate JWT token
+        String token = jwtService.generateToken(loginRequest.getEmail());
         // Step 3: Login success
         return LoginResponseDto.builder()
                 .message("Login successful")
+                .token(token)
+                .tokenType("Bearer")
                 .build();
     }
 
