@@ -2,6 +2,7 @@ package com.learning.springboot.modules.user.mapper;
 
 import com.learning.springboot.modules.user.dto.UserRequestDto;
 import com.learning.springboot.modules.user.dto.UserResponseDto;
+import com.learning.springboot.modules.user.entity.Role;
 import com.learning.springboot.modules.user.entity.User;
 
 public class UserMapper {
@@ -18,6 +19,7 @@ public class UserMapper {
                 .lastName(userRequest.getLastName())
                 .email(userRequest.getEmail())
                 .password(userRequest.getPassword())
+                .role(Role.USER)
                 .build();
     }
 
@@ -28,6 +30,7 @@ public class UserMapper {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();

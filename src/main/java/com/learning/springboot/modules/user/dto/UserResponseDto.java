@@ -1,6 +1,8 @@
 package com.learning.springboot.modules.user.dto;
 
+import com.learning.springboot.modules.user.entity.Role;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,6 +19,8 @@ public class UserResponseDto {
     private String lastName;
 
     private String email;
+
+    private Role role;
 
     private LocalDateTime createdAt;
 
