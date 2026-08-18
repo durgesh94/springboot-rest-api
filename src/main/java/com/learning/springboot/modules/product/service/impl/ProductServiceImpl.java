@@ -7,6 +7,7 @@ import com.learning.springboot.modules.product.entity.Product;
 import com.learning.springboot.modules.product.mapper.ProductMapper;
 import com.learning.springboot.modules.product.repository.ProductRepository;
 import com.learning.springboot.modules.product.service.ProductService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public Void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
