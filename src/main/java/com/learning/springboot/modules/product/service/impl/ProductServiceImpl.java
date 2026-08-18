@@ -22,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductResponseDto createProduct(ProductRequestDto productRequest) {
         Product product = ProductMapper.toEntity(productRequest);
         Product savedProduct = productRepository.save(product);
@@ -29,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+   @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ProductResponseDto getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -36,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<ProductResponseDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream()
@@ -44,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductResponseDto updateProduct(Long id, ProductRequestDto productRequest) {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -54,11 +58,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public Void deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         productRepository.delete(product);
-        return null;
     }
 
 }

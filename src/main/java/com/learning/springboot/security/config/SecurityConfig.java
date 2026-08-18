@@ -62,37 +62,7 @@ public class SecurityConfig {
                                 "/error"
                         )
                         .permitAll()
-
-                        // USER + ADMIN
-                        .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/v1/users",
-                                "/api/v1/users/**",
-                                "/api/v1/products",
-                                "/api/v1/products/**"
-                        )
-                        .hasAnyRole("USER", "ADMIN")
-
-                        // ADMIN Only
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/v1/products"
-                        )
-                        .hasRole("ADMIN")
-                        .requestMatchers(
-                                HttpMethod.PUT,
-                                "/api/v1/users/**",
-                                "/api/v1/products/**"
-                        )
-                        .hasRole("ADMIN")
-                        .requestMatchers(
-                                HttpMethod.DELETE,
-                                "/api/v1/users/**"
-                                // "/api/v1/products/**" // add method-level security for product deletion
-                        )
-                        .hasRole("ADMIN")
-
-                        // Everything else requires authentication
+                        // AUTHENTICATED APIs
                         .anyRequest()
                         .authenticated()
                 )

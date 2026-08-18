@@ -9,6 +9,8 @@ import com.learning.springboot.modules.user.mapper.UserMapper;
 import com.learning.springboot.modules.user.repository.UserRepository;
 import com.learning.springboot.modules.user.service.UserService;
 import jakarta.transaction.Transactional;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -54,6 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponseDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
@@ -64,6 +68,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     // @Transactional annotation is used to manage transactions in the updateUser method. It ensures that the entire method is executed within a single transaction, which means that if any part of the method fails (e.g., if an exception is thrown), all changes made during the method execution will be rolled back, maintaining data integrity.
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponseDto updateUser(Long id, UserRequestDto userRequest) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -87,6 +92,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     // @Transactional annotation is used to manage transactions in the updateUser method. It ensures that the entire method is executed within a single transaction, which means that if any part of the method fails (e.g., if an exception is thrown), all changes made during the method execution will be rolled back, maintaining data integrity.
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
