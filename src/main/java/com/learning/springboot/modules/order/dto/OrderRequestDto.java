@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class OrderRequestDto {
 
-    @NotEmpty
+    @NotEmpty(message = "Order must contain at least one item")
     @Valid
     private List<OrderItemRequestDto> items;
 }
