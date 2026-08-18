@@ -9,7 +9,6 @@ import com.learning.springboot.modules.user.mapper.UserMapper;
 import com.learning.springboot.modules.user.repository.UserRepository;
 import com.learning.springboot.modules.user.service.UserService;
 import jakarta.transaction.Transactional;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
