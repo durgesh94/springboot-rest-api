@@ -5,6 +5,7 @@ import com.learning.springboot.security.handler.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,12 +48,49 @@ public class SecurityConfig {
                         exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // PUBLIC APIs
                         .requestMatchers(
-                                "/api/v1/users",
+                                HttpMethod.POST,
+                                "/api/v1/users"
+                        )
+                        .permitAll()
+
+                        .requestMatchers(
                                 "/api/v1/auth/login",
                                 "/error"
                         )
                         .permitAll()
+
+                        // USER + ADMIN
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/users",
+                                "/api/v1/users/**",
+                                "/api/v1/products",
+                                "/api/v1/products/**"
+                        )
+                        .hasAnyRole("USER", "ADMIN")
+
+                        // ADMIN Only
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/products"
+                        )
+                        .hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/v1/users/**",
+                                "/api/v1/products/**"
+                        )
+                        .hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/v1/users/**",
+                                "/api/v1/products/**"
+                        )
+                        .hasRole("ADMIN")
+
+                        // Everything else requires authentication
                         .anyRequest()
                         .authenticated()
                 )
