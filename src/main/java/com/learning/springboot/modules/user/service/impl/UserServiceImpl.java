@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     // @Transactional annotation is used to manage transactions in the updateUser method. It ensures that the entire method is executed within a single transaction, which means that if any part of the method fails (e.g., if an exception is thrown), all changes made during the method execution will be rolled back, maintaining data integrity.
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public UserResponseDto updateUser(Long id, UserRequestDto userRequest) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
