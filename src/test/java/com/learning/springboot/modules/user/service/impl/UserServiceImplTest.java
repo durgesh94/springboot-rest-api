@@ -76,7 +76,6 @@ public class UserServiceImplTest {
         userRequest.setEmail("durgesh@gmail.com");
         userRequest.setFirstName("Durgesh");
         userRequest.setLastName("Tambe");
-        userRequest.setEmail("durgesh@gmail.com");
         userRequest.setPassword("password123");
 
         when(userRepository.existsByEmail("durgesh@gmail.com")).thenReturn(true);
