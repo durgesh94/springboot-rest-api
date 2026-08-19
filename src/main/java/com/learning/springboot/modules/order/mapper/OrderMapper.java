@@ -24,8 +24,9 @@ public class OrderMapper {
         return OrderResponseDto.builder()
                 .id(order.getId())
                 .userId(order.getUser().getId())
-                .items(items)
+                .status(order.getStatus())
                 .totalAmount(totalAmount)
+                .items(items)
                 .build();
     }
 

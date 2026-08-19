@@ -6,6 +6,7 @@ import com.learning.springboot.modules.order.dto.OrderRequestDto;
 import com.learning.springboot.modules.order.dto.OrderResponseDto;
 import com.learning.springboot.modules.order.entity.Order;
 import com.learning.springboot.modules.order.entity.OrderItem;
+import com.learning.springboot.modules.order.entity.OrderStatus;
 import com.learning.springboot.modules.order.mapper.OrderMapper;
 import com.learning.springboot.modules.order.repository.OrderItemRepository;
 import com.learning.springboot.modules.order.repository.OrderRepository;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         // Step 2: Create order
         Order order = Order.builder()
                 .user(user)
+                .status(OrderStatus.PLACED)
                 .build();
         // Step 3: Process each requested item
         for (OrderItemRequestDto itemRequest : orderRequest.getItems()) {
