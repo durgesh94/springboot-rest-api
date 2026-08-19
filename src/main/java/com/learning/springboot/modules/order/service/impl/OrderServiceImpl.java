@@ -4,6 +4,7 @@ import com.learning.springboot.exception.ResourceNotFoundException;
 import com.learning.springboot.modules.order.dto.OrderItemRequestDto;
 import com.learning.springboot.modules.order.dto.OrderRequestDto;
 import com.learning.springboot.modules.order.dto.OrderResponseDto;
+import com.learning.springboot.modules.order.dto.OrderStatusUpdateRequestDto;
 import com.learning.springboot.modules.order.entity.Order;
 import com.learning.springboot.modules.order.entity.OrderItem;
 import com.learning.springboot.modules.order.entity.OrderStatus;
@@ -19,6 +20,7 @@ import com.learning.springboot.security.util.SecurityUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -97,5 +99,16 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream()
                 .map(OrderMapper::toDto)
                 .toList();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @Override
+    public OrderResponseDto updateOrderStatus(Long id, OrderStatusUpdateRequestDto statusUpdateRequest) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", id));
+
+        order.setStatus(statusUpdateRequest.getStatus());
+        Order updatedOrder = orderRepository.save(order);
+        return OrderMapper.toDto(updatedOrder);
     }
 }
