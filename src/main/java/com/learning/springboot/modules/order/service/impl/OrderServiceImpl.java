@@ -35,7 +35,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto createOrder(OrderRequestDto orderRequest) {
         // Step 1: Get currect auth user
         Long userId = SecurityUtils.getCurrentUserId();
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(userId));
+        System.out.println("USERID:::::" + userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", userId));
         // Step 2: Create order
         Order order = Order.builder()
                 .user(user)
@@ -43,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         // Step 3: Process each requested item
         for (OrderItemRequestDto itemRequest : orderRequest.getItems()) {
             Product product = productRepository.findById(itemRequest.getProductId())
-                    .orElseThrow(() -> new ResourceNotFoundException(itemRequest.getProductId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Product", itemRequest.getProductId()));
             // Step 4: Get current product price as order price
             OrderItem orderItem = OrderItem.builder()
                     .order(order)

@@ -30,7 +30,7 @@ public class AddressServiceImpl implements AddressService {
         // Step 1: Find user
         Long userId = addressRequest.getUserId();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
         // Step 2: Convert dto to entity
         Address address = AddressMapper.toEntity(addressRequest, user);
         // Step 3: Save address
@@ -42,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressResponseDto getAddressById(Long id) {
         Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Address", id));
         return AddressMapper.toDto(address);
     }
 
@@ -58,7 +58,7 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressResponseDto> getAddressesByUserId(Long userId) {
         // Verify user exist
         userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
 
         List<Address> addresses = addressRepository.findByUserId(userId);
 
@@ -71,12 +71,12 @@ public class AddressServiceImpl implements AddressService {
     public AddressResponseDto updateAddress(Long id, AddressRequestDto addressRequest) {
         // Step 1: Find existing address
         Address existingAddress = addressRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Address", id));
 
         // Step 2: Find user
         Long userId = addressRequest.getUserId();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
 
         // Step 3: Update existing entity
         AddressMapper.updateEntity(
@@ -96,7 +96,7 @@ public class AddressServiceImpl implements AddressService {
     public Void deleteAddressById(Long id) {
         Address address = addressRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(id));
+                        new ResourceNotFoundException("Address", id));
 
         addressRepository.delete(address);
         return null;

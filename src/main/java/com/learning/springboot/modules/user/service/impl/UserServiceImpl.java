@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("User", id));
 
         return UserMapper.toDto(user);
     }
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
     public UserResponseDto updateUser(Long id, UserRequestDto userRequest) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("User", id));
 
         // Check duplicate email only if the email is changed
         if (!existingUser.getEmail().equals(userRequest.getEmail())) {
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("User", id));
 
         userRepository.delete(user);
     }

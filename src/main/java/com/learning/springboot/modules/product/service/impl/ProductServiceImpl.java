@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ProductResponseDto getProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Product", id));
         return ProductMapper.toDto(product);
     }
 
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponseDto updateProduct(Long id, ProductRequestDto productRequest) {
         Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Product", id));
         ProductMapper.updateEntity(existingProduct, productRequest);
         Product updatedProduct = productRepository.save(existingProduct);
         return ProductMapper.toDto(updatedProduct);
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Product", id));
         productRepository.delete(product);
     }
 
