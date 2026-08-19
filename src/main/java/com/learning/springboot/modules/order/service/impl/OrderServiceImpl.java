@@ -17,6 +17,7 @@ import com.learning.springboot.modules.user.repository.UserRepository;
 import com.learning.springboot.security.util.SecurityUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto createOrder(OrderRequestDto orderRequest) {
         // Step 1: Get currect auth user
         Long userId = SecurityUtils.getCurrentUserId();
-        System.out.println("USERID:::::" + userId);
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", userId));
         // Step 2: Create order
         Order order = Order.builder()
@@ -63,11 +63,37 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponseDto getOrderById(Long id) {
-        return null;
+
+        Order order = orderRepository.findByIdWithItems(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Order", id)
+                );
+
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+
+        boolean isAdmin = SecurityUtils.getCurrentUser()
+                .getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority().equals("ROLE_ADMIN")
+                );
+
+        if (!isAdmin && !order.getUser().getId().equals(currentUserId)) {
+            throw new AccessDeniedException(
+                    "You are not allowed to access this order"
+            );
+        }
+
+        return OrderMapper.toDto(order);
     }
 
     @Override
     public List<OrderResponseDto> getMyOrders() {
-        return List.of();
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+        List<Order> orders =
+                orderRepository.findByUserIdWithItems(currentUserId);
+        return orders.stream()
+                .map(OrderMapper::toDto)
+                .toList();
     }
 }
