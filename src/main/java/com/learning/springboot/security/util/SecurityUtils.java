@@ -6,30 +6,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public final class SecurityUtils {
 
-    private SecurityUtils() {
+  private SecurityUtils() {}
+
+  public static CustomUserDetails getCurrentUser() {
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication == null || !authentication.isAuthenticated()) {
+
+      throw new IllegalStateException("User is not authenticated");
     }
 
-    public static CustomUserDetails getCurrentUser() {
+    Object principal = authentication.getPrincipal();
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null ||
-                !authentication.isAuthenticated()) {
-
-            throw new IllegalStateException("User is not authenticated");
-        }
-
-        Object principal = authentication.getPrincipal();
-
-        if (!(principal instanceof CustomUserDetails userDetails)) {
-            throw new IllegalStateException("Invalid authentication principal");
-        }
-
-        return userDetails;
+    if (!(principal instanceof CustomUserDetails userDetails)) {
+      throw new IllegalStateException("Invalid authentication principal");
     }
 
-    public static Long getCurrentUserId() {
-        return getCurrentUser().getId();
-    }
+    return userDetails;
+  }
+
+  public static Long getCurrentUserId() {
+    return getCurrentUser().getId();
+  }
 }

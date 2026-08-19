@@ -1,9 +1,8 @@
 package com.learning.springboot.modules.user.dto;
 
 import com.learning.springboot.modules.user.entity.Role;
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,17 +11,17 @@ import java.time.LocalDateTime;
 @Builder
 public class UserResponseDto {
 
-    private Long id;
+  private Long id;
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private String email;
+  private String email;
 
-    private Role role;
+  private Role role;
 
-    private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
+  private LocalDateTime updatedAt;
 }

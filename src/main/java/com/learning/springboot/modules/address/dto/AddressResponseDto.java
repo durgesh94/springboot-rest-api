@@ -1,8 +1,7 @@
 package com.learning.springboot.modules.address.dto;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -11,20 +10,19 @@ import java.time.LocalDateTime;
 @Builder
 public class AddressResponseDto {
 
-    private Long id;
+  private Long id;
 
-    private Long userId;
+  private Long userId;
 
-    private String street;
+  private String street;
 
-    private String city;
+  private String city;
 
-    private String state;
+  private String state;
 
-    private String pincode;
+  private String pincode;
 
-    private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
-
+  private LocalDateTime updatedAt;
 }

@@ -1,7 +1,7 @@
 package com.learning.springboot.modules.order.dto;
 
-import jakarta.validation.constraints.NotNull;
 import com.learning.springboot.modules.order.entity.OrderStatus;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 public class OrderStatusUpdateRequestDto {
 
-    @NotNull(message = "Order status is required")
-    private OrderStatus status;
-
+  @NotNull(message = "Order status is required")
+  private OrderStatus status;
 }

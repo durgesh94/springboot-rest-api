@@ -1,9 +1,8 @@
 package com.learning.springboot.modules.product.dto;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,18 +11,17 @@ import java.time.LocalDateTime;
 @Builder
 public class ProductResponseDto {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private String description;
+  private String description;
 
-    private BigDecimal price;
+  private BigDecimal price;
 
-    private Integer quantity;
+  private Integer quantity;
 
-    private LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
-
+  private LocalDateTime updatedAt;
 }

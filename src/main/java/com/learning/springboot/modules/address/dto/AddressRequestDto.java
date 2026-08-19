@@ -12,25 +12,22 @@ import lombok.*;
 @Builder
 public class AddressRequestDto {
 
-    @NotNull(message = "User Id is required")
-    private Long userId;
+  @NotNull(message = "User Id is required")
+  private Long userId;
 
-    @NotNull(message = "Address type is required")
-    private String type;
+  @NotNull(message = "Address type is required")
+  private String type;
 
-    @NotBlank(message = "Street is required")
-    private String street;
+  @NotBlank(message = "Street is required")
+  private String street;
 
-    @NotBlank(message = "City is required")
-    private String city;
+  @NotBlank(message = "City is required")
+  private String city;
 
-    @NotBlank(message = "State is required")
-    private String state;
+  @NotBlank(message = "State is required")
+  private String state;
 
-    @NotBlank(message = "Pincode is required")
-    @Pattern(
-            regexp = "^[0-9]{6}$",
-            message = "Pincode must be valid 6-digit number"
-    )
-    private String pincode;
+  @NotBlank(message = "Pincode is required")
+  @Pattern(regexp = "^[0-9]{6}$", message = "Pincode must be valid 6-digit number")
+  private String pincode;
 }

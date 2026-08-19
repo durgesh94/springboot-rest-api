@@ -7,15 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartupListener {
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void onApplicationReady() {
+  @EventListener(ApplicationReadyEvent.class)
+  public void onApplicationReady() {
 
-        System.out.println("""
-                
+    System.out.println(
+        """
+
                 ==============================================
                  🚀 Spring Boot REST API Started Successfully!
                  🌐 URL : http://localhost:8080
                 ==============================================
                 """);
-    }
+  }
 }

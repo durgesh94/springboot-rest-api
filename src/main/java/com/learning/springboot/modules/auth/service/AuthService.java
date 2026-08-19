@@ -5,6 +5,5 @@ import com.learning.springboot.modules.auth.dto.LoginResponseDto;
 
 public interface AuthService {
 
-    LoginResponseDto login(LoginRequestDto loginRequest);
-
+  LoginResponseDto login(LoginRequestDto loginRequest);
 }

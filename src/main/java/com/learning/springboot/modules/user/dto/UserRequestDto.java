@@ -11,16 +11,16 @@ import lombok.*;
 @Builder
 public class UserRequestDto {
 
-    @NotBlank(message = "First name is required")
-    private String firstName;
+  @NotBlank(message = "First name is required")
+  private String firstName;
 
-    @NotBlank(message = "Last name is required")
-    private String lastName;
+  @NotBlank(message = "Last name is required")
+  private String lastName;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email")
-    private String email;
+  @NotBlank(message = "Email is required")
+  @Email(message = "Invalid email")
+  private String email;
 
-    @NotBlank(message = "Password is required")
-    private String password;
+  @NotBlank(message = "Password is required")
+  private String password;
 }
