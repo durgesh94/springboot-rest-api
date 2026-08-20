@@ -116,6 +116,7 @@
 
     <build>
         <plugins>
+        <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -128,6 +129,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -164,6 +166,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Spotless for format code -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -186,6 +189,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Checkstyle for code style enforcement -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -207,6 +211,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- JaCoCo for code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -225,6 +230,28 @@
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- OWASP Dependency-Check for vulnerability scanning  -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>13.0.0</version>
+
+                <configuration>
+                    <failBuildOnCVSS>7</failBuildOnCVSS>
+                    <failOnError>true</failOnError>
+                    <format>HTML</format>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>dependency-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
