@@ -16,6 +16,8 @@ public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository productRepository;
 
+  private static final String PRODUCT_STRING = "Product";
+
   public ProductServiceImpl(ProductRepository productRepository) {
     this.productRepository = productRepository;
   }
@@ -34,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     Product product =
         productRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product", id));
+            .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_STRING, id));
     return ProductMapper.toDto(product);
   }
 
@@ -51,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     Product existingProduct =
         productRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product", id));
+            .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_STRING, id));
     ProductMapper.updateEntity(existingProduct, productRequest);
     Product updatedProduct = productRepository.save(existingProduct);
     return ProductMapper.toDto(updatedProduct);
@@ -63,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     Product product =
         productRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product", id));
+            .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_STRING, id));
     productRepository.delete(product);
   }
 }
