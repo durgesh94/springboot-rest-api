@@ -9,5 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 class SpringbootRestApiApplicationTests {
 
   @Test
-  void contextLoads() {}
+  void contextLoads() {
+    // Intentionally left empty. This test ensures that the Spring application context loads
+    // successfully without any issues.
+  }
 }
