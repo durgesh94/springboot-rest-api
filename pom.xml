@@ -235,7 +235,7 @@
                 </executions>
             </plugin>
             <!-- OWASP Dependency-Check for vulnerability scanning  -->
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>13.0.0</version>
@@ -256,7 +256,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 

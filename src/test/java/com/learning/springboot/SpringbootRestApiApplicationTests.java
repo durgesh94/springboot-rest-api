@@ -9,7 +9,5 @@ import org.springframework.test.context.ActiveProfiles;
 class SpringbootRestApiApplicationTests {
 
   @Test
-  void contextLoads() {
-    // This test will pass if the application context loads successfully, indicating that the Spring Boot application is configured correctly and all necessary beans are available.
-  }
+  void contextLoads() {}
 }

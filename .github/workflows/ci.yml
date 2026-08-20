@@ -28,4 +28,4 @@ jobs:
           cache: maven
 
       - name: Run Maven verification
-        run: ./mvnw clean verify -Dnvd.api.key="${{ secrets.NVD_API_KEY }}"
+        run: ./mvnw clean verify

@@ -17,7 +17,7 @@ public class AddressServiceImpl implements AddressService {
 
   private final AddressRepository addressRepository;
   private final UserRepository userRepository;
-  
+
   private static final String ADDRESS_STRING = "Address";
   private static final String USER_STRING = "User";
 
