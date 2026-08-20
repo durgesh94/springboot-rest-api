@@ -27,5 +27,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build, test and SonarQube analysis
-        run: mvn clean verify
+      - name: Run Maven verification
+        run: ./mvnw clean verify
