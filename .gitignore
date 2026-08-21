@@ -34,7 +34,6 @@ Thumbs.db
 
 ### Environment Files ###
 .env
-.env.*
 
 ### Temporary Files ###
 *.tmp
