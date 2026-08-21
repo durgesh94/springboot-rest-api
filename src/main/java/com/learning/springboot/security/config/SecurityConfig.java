@@ -51,7 +51,7 @@ public class SecurityConfig {
                     // PUBLIC APIs
                     .requestMatchers(HttpMethod.POST, "/api/v1/users")
                     .permitAll()
-                    .requestMatchers("/api/v1/auth/login", "/error")
+                    .requestMatchers("/actuator/health", "/api/v1/auth/login", "/error")
                     .permitAll()
                     // AUTHENTICATED APIs
                     .anyRequest()
